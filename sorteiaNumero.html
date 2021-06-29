@@ -1,0 +1,39 @@
+<meta charset="UTF-8">
+
+<script>
+
+	function pulaLinha(){
+		document.write("<br>");
+	}
+	function mostra(frase){
+		document.write("<big>" + frase+ "</big>");
+		pulaLinha();
+	}
+	
+	var numeroPensado = Math.round(Math.random()*10); // MATH.RANDOM sorteia um numero de 0 a *10 dez 
+	console.log(numeroPensado); // CONSOLE.LOG exibe no console F12.
+	
+	var conta = 1;
+	
+	while (conta <=3){
+		var chute = parseInt(prompt("Digite um numero de 0 a 10: "));
+		
+		if (chute == numeroPensado){
+			mostra("Parabéns você ACERTOU!!! O numero pensado foi: " + numeroPensado);
+			break;
+		} 
+		else {
+			mostra (" ERROU !!! Você escolheu " + chute );
+		}
+
+		conta++;
+	}
+	mostra(" O numero pensado foi " + numeroPensado);	
+	mostra("FIM");
+
+
+</script>
+
+
+
+

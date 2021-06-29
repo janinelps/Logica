@@ -1,0 +1,114 @@
+<canvas width = "600"  height = "400" ></canvas>
+
+
+<script>
+
+	var tela = document.querySelector("canvas");
+	var pincel = tela.getContext("2d");
+	
+	function desenhaTexto(texto,x,y){
+		pincel.font="20px georgian";
+		pincel.fillStyle = "black";
+		pincel.fillText(texto, x,y);	
+	}
+	
+	
+	desenhaTexto("EXEMPLO DE TEXTO",50,30);
+
+	pincel.fillStyle = "lightpink";
+	pincel.fillRect(200, 50, 600, 400);
+	
+	pincel.fillStyle = "red";
+	pincel.fillRect(0,50,200,400);
+
+	pincel.fillStyle = "blue";
+	pincel.fillRect(400,50,200,400);
+	
+	pincel.fillStyle = "yellow";
+	pincel.beginPath();
+	pincel.moveTo(300,200);
+	pincel.lineTo(200,400);
+	pincel.lineTo(400, 400);
+	pincel.fill();
+	
+	pincel.fillStyle = "darkgray";
+	pincel.beginPath();
+	pincel.arc(300,200, 30,0,2*3.14);
+	pincel.fill();
+	
+	function desenhaQuadrado(x,y,cor){
+	pincel.fillStyle = cor;
+	pincel.fillRect(x, y,50,50);
+	pincel.strokeStyle = "white";
+	pincel.strokeRect(x,y,50,50);
+	pincel.strokeRect(x,y,50,50);
+	pincel.strokeRect(x,y,50,50);
+	}
+	
+	for (var x = 0; x < 600; x = x + 50){
+		desenhaQuadrado(x,50,"purple");
+	}
+	
+	function circulo(x,y,raio, cor){
+		
+		pincel.fillStyle = cor;
+		pincel.beginPath();
+		pincel.arc(x,y,raio, 0, 2*3.14);
+		pincel.fill();
+	}
+	
+	function desenhaFlor(x,y){
+	
+	circulo(x-60,200,30, "green");
+	circulo(300,y-60,30, "orange");
+	circulo(300,y+60,30, "purple");
+	circulo(x+60,200,30, "brown");
+	}
+	
+	desenhaFlor(300,200);
+	
+	function desenhaRetangulo(x,y,largura,altura,cor){
+		pincel.fillStyle = cor;
+		pincel.fillRect(x,y,largura,altura);
+		pincel.strokeRect(x,y,largura,altura);
+		
+	}
+	
+	
+	var serie2015 = [50,25,20,5];
+	var serie2016 = [65,20,13,2];
+	
+	var cores = ["blue", "green", "yellow", "red"];
+		
+	function desenhaBarra(x,y,serie, cor, texto){
+		desenhaTexto(texto, x,y - 10);
+		
+		var somaAltura = 0; // variavel auxiliar
+		
+		for (i=0;i<serie.length; i++){
+		
+			var altura = serie[i];
+			
+			desenhaRetangulo(x,y + somaAltura, 50, altura,cores[i]);
+			somaAltura = somaAltura + altura
+		}		
+	}
+	
+	
+	desenhaBarra(50,300, serie2015,cores, "2015");
+	desenhaBarra(125,300,serie2016, cores, "2016");
+	
+	
+	function desenhaTriangulo(xa,ya,xc,yc, cor){
+		pincel.fillStyle = cor;
+		pincel.beginPath();
+		pincel.lineTo(xa,ya);
+		pincel.lineTo(xa,yc);
+		pincel.lineTo(xc,yc);
+		pincel.fill();
+	}
+	
+	desenhaTriangulo(400,100,800,700, "black");
+	desenhaTriangulo(430,200,550,370, "white");
+	
+</script>

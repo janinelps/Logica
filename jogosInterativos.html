@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <canvas width="600" height="400"></canvas>
+    <br> Escolha uma cor. <input type="color">
+    <br> ► Botao direito troca cor da ponta do pincel.
+
+    <script>
+
+        var paleta = document.querySelector("input");
+        var tela = document.querySelector("canvas");
+        var pincel = tela.getContext("2d");
+
+        var cores = ["blue", "red", "green"];
+        var i = 0;
+
+        var raio = 10;
+        var raioAlvo = 10;
+        var aumenta = 0;
+        var desenha = false;
+        var x = 20;
+        var y = 30;
+        var sentido = 1;
+        var tamanho = 15;
+        var raioAlvoRedP = 5;
+        var tamanhoQuadrado = 25;
+
+        pincel.fillStyle = "lightgray";
+        pincel.fillRect(0, 0, 600, 400);
+        pincel.strokeRect(0, 60, 600, 400);
+
+        function desenhaQuadrado(tamanho, tamanho) {
+
+            pincel.fillStyle = cores[i];
+            pincel.fillRect(0, 375, tamanhoQuadrado+575, tamanhoQuadrado);
+            pincel.fill();
+        }
+
+            function desenhaCirculo(evento, x) {
+
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+
+                pincel.fillStyle = cores[i];
+                pincel.beginPath();
+                pincel.arc(x, y, raio, 0, 2 * Math.PI);
+                pincel.fill();
+
+                if (evento.shiftKey && raio + 10 <= 30) {
+                    aumenta = aumenta + raio;
+                    raio = aumenta;
+
+                }
+                if (evento.altKey && raio - 5 >= 5) {
+                    raio = raio - 5;
+                    if (raio == 5) {
+                        raio = 5;
+                    }
+                }
+            }
+
+            function habilitaDesenhar() {
+                desenha = true;
+            }
+
+            function desabilitaDesenhar() {
+                desenha = false;
+            }
+
+            function podeDesenhar(x, y) {
+                if (x >= 0 && x < tamanhoQuadrado+575 && y >= 350 && y < tamanhoQuadrado) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function mudaCor() {
+
+                i++;
+                if (i >= cores.length) {
+                    i = 0;
+                }
+                return false;
+            }
+
+
+            // atribuindo diretamente a Função Anonima
+            function lidaComMovimentoDoMouse(evento) {
+
+                var x = evento.pageX - tela.offsetLeft;
+                var y = evento.pageY - tela.offsetTop;
+
+                if (desenha && podeDesenhar(x, y)) {
+
+                    pincel.fillStyle = paleta.value;
+                    pincel.beginPath();
+                    pincel.arc(x, y, raio, 0, 2 * Math.PI);
+                    pincel.fill();
+                }
+            }
+
+            function alvo(x, y, raioAlvo, cor) {
+
+                pincel.fillStyle = cor;
+                pincel.beginPath();
+                pincel.arc(x, y, raioAlvo, 0, 2 * Math.PI);
+                pincel.fill();
+            }
+
+            function dispara(evento) {
+                var eventoX = evento.pageX - tela.offsetLeft;
+                var eventoY = evento.pageY - tela.offsetTop;
+
+                if (eventoX > (x - raioAlvoRedP) && eventoX < (x + raioAlvoRedP) && eventoY > (y - raioAlvoRedP) && eventoY < (y + raioAlvoRedP)) {
+                    alert("ACERTOU!!");
+                }
+            }
+
+            function limpaTela() {
+                pincel.clearRect(0, 0, 600, 60);
+
+            }
+
+            function atualizaTela() {
+                limpaTela();
+                alvo(x, y, raioAlvo + 5, "red");
+                alvo(x, y, raioAlvo, "white");
+                alvo(x, y, raioAlvoRedP, "red");
+
+                if (x > 600) {
+                    sentido = -1;
+                } else if (x < 0) {
+                    sentido = 1;
+                }
+
+                x = x + sentido;
+
+                if (raioAlvo > 20) {
+                    tamanho = -1;
+                } else if (raioAlvo < 10) {
+                    tamanho = + 1;
+                }
+                raioAlvo = raioAlvo + tamanho;
+            }
+
+            function onclickTela(evento) {
+                desenhaCirculo(evento);
+                dispara(evento);
+                atualizaTela(evento);
+
+            }
+
+            setInterval(atualizaTela, 20);
+            atualizaTela();
+
+
+            tela.onclick = onclickTela;
+
+            tela.oncontextmenu = function (evento) {
+                mudaCor(evento);
+                desenhaQuadrado(evento);
+            }
+
+            desenhaQuadrado();
+            tela.onmousedown = habilitaDesenhar;
+            tela.onmouseup = desabilitaDesenhar;
+            tela.onmousemove = lidaComMovimentoDoMouse;
+
+    </Script>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brasil x Chile</title>
+</head>
+<h1>Brasil x Chile</h1>
+
+<body>
+    <canvas width="600" height="400">
+
+        <script>
+            
+            var tela = document.querySelector("canvas");
+            var pincel = tela.getContext("2d");
+
+            function estrela(){
+                
+                pincel.fillStyle = "white"
+                pincel.beginPath();
+                pincel.moveTo(100, 40);
+                pincel.lineTo(80, 80);
+                pincel.lineTo(40, 80);
+                pincel.lineTo(70, 110);
+                pincel.lineTo(40, 160);
+                pincel.lineTo(100, 130);
+                pincel.lineTo(150, 160);
+                pincel.lineTo(130, 110);
+                pincel.lineTo(160, 80);
+                pincel.lineTo(120, 80)
+                pincel.fill();
+
+            }
+
+            function brasil() {
+
+                var tela = document.querySelector("canvas");
+                var pincel = tela.getContext("2d");
+
+                pincel.fillStyle = "green";
+                pincel.fillRect(0, 0, 600, 400);
+
+                pincel.fillStyle = "yellow";
+                pincel.beginPath();
+                pincel.moveTo(300, 0);
+                pincel.lineTo(0, 200);
+                pincel.lineTo(300, 400);
+                pincel.lineTo(600, 200);
+                pincel.fill();
+
+                pincel.fillStyle = "blue";
+                pincel.beginPath();
+                pincel.arc(300, 200, 140, 0, 2 * Math.PI);
+                pincel.fill();
+
+            }
+
+            function chile() {
+
+                var tela = document.querySelector("canvas");
+                var pincel = tela.getContext("2d");
+                
+                pincel.fillStyle = "blue'";
+                pincel.fillRect(0, 0, 200, 200);               
+
+                pincel.fillStyle = "white";
+                pincel.fillRect(200, 0, 400, 200);
+                
+                pincel.fillStyle = "red";
+                pincel.fillRect(0, 200, 600, 400);
+                pincel.strokeRect(0,0,600,400);
+
+                estrela();
+            }
+
+            var troca = true;
+
+            function trocaBandeira() {
+
+                if (troca) {
+                    brasil();
+                } else {
+                    chile();
+                }
+
+                troca = !troca;
+            }
+
+            setInterval(trocaBandeira, 3000);
+
+        </script>
+
+
+
+</body>
+
+</html>
