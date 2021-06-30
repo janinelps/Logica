@@ -1,2 +1,2 @@
 # Logica
-Pratica de logica de programação em Java e HTML  
+Pratica de logica de programação em JavaScript e HTML
