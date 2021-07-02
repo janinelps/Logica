@@ -11,20 +11,13 @@
 <body>
 
     <canvas width="600" height="400"></canvas>
-    <br> Escolha uma cor. <input type="color">
 
     <script>
-
-        var paleta = document.querySelector("input");
-
         var tela = document.querySelector("canvas");
         var pincel = tela.getContext("2d");
 
-        var cores = ["blue", "red", "green"];
-        var i = 0;
-
         var raio = 10;
-        var aumenta = 0;
+
         var desenha = false;
         var raioAlvoRedG = 75;
         var raioAlvowhite = 50;
@@ -37,76 +30,15 @@
         var contx = 5;
         var conty = 5;
 
-
-        // controle pelas setas do teclado
-        var x = 20;
-        var y = 20;
-
-        var esquerda = 37;
-        var cima = 38;
-        var direita = 39;
-        var baixo = 40;
-
-        var taxa = 10;
-
-
         pincel.fillStyle = "lightgray";
         pincel.fillRect(0, 0, 600, 400);
         pincel.strokeRect(0, 40, 600, 400);
-
-
-        function desenhaCirculo(evento, x) {
-
-            var x = evento.pageX - tela.offsetLeft;
-            var y = evento.pageY - tela.offsetTop;
-
-            if (evento.shiftKey && raio + 10 <= 40) {
-                aumenta = aumenta + raio;
-                raio = aumenta;
-
-            }
-            if (evento.altKey && raio - 5 >= 5) {
-                raio = raio - 5;
-                if (raio == 5) {
-                    raio = 5;
-                }
-            }
-
-            pincel.fillStyle = cores[i];
-            pincel.beginPath();
-            pincel.arc(x, y, raio, 0, 2 * Math.PI);
-            pincel.fill();
-
-        }
-
-        function mudaCor() {
-            i++;
-            if (i >= cores.length) {
-                i = 0;
-            }
-            return false;
-        }
-
-        // atribuindo diretamente a Função Anonima
-        tela.onmousemove = function (evento) {
-            if (desenha) {
-                var x = evento.pageX - tela.offsetLeft;
-                var y = evento.pageY - tela.offsetTop;
-
-                pincel.fillStyle = paleta.value;
-                pincel.beginPath();
-                pincel.arc(x, y, raio, 0, 2 * Math.PI);
-                pincel.fill();
-
-            }
-        }
 
         function alvo(x, y, raio, cor) {
             pincel.fillStyle = cor;
             pincel.beginPath();
             pincel.arc(x, y, raio, 0, 2 * Math.PI);
             pincel.fill();
-
         }
 
         function dispara(evento) {
@@ -120,7 +52,6 @@
 
         function limpaTela() {
             pincel.clearRect(0, 0, 600, 400);
-
         }
 
         function atualizaTela() {
@@ -150,58 +81,30 @@
                 posX -= contx;
                 posY -= conty;
             }
-
         }
 
         function getRandomIntInclusive(min, max) {
             min = Math.ceil(min);
             max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+            return Math.floor(Math.random() * (max - min + 1)) - min;
         }
 
-        tela.onmousedown = function () {
+        tela.onmousedown = function() {
             desenha = true;
         }
 
-        tela.onmouseup = function () {
+        tela.onmouseup = function() {
             desenha = false;
         }
 
         function onclickTela(evento) {
-            desenhaCirculo(evento);
+
             dispara(evento);
         }
 
-        function leDoTeclado(evento) {
-            evento = evento || window.event;
-
-            if (evento.keyCode == esquerda) {
-                // left arrow
-                x = x - taxa;
-            }
-            else if (evento.keyCode == cima) {
-                y = y - taxa;
-                // up arrow
-            }
-            else if (evento.keyCode == direita) {
-                x = x + taxa;
-                // right arrow
-            }
-            else if (evento.keyCode == baixo) {
-                y = y + taxa;
-                // down arrow
-            }
-        }
-
-
-        document.onkeydown = leDoTeclado;
-
-        setInterval(atualizaTela, 40);
+        setInterval(atualizaTela, 10);
 
         tela.onclick = onclickTela;
-
-        tela.oncontextmenu = mudaCor;
-
     </Script>
 
 </body>
